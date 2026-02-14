@@ -1,4 +1,10 @@
 import Card from "../../components/Card";
+import { useSpendingSummary } from "../../api/queries";
+
+function moneyZAR(amount) {
+  if (amount == null) return "—";
+  return new Intl.NumberFormat("en-ZA", { style: "currency", currency: "ZAR" }).format(amount);
+}
 
 function Stat({ label, value, sub }) {
   return (
@@ -10,14 +16,33 @@ function Stat({ label, value, sub }) {
   );
 }
 
-export default function SummaryGrid({ period }) {
+export default function SummaryGrid({ customerId, period }) {
+  const { data, isLoading, error } = useSpendingSummary(customerId, period);
+
   return (
     <Card title="Summary" right={<div className="text-xs text-slate-500">Period: {period}</div>}>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <Stat label="Total spent" value="R 4,250.75" sub="▲ 12.5% vs previous" />
-        <Stat label="Transactions" value="47" sub="▼ 3.2% vs previous" />
-        <Stat label="Avg transaction" value="R 90.44" sub="Top category: Groceries" />
-      </div>
+      {isLoading && <div className="text-sm text-slate-500">Loading summary…</div>}
+      {error && <div className="text-sm text-red-600">{String(error.message || error)}</div>}
+
+      {data && (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Stat
+            label="Total spent"
+            value={moneyZAR(data.totalSpent)}
+            sub={`${data.comparedToPrevious?.spentChange ?? 0}% vs previous`}
+          />
+          <Stat
+            label="Transactions"
+            value={String(data.transactionCount ?? "—")}
+            sub={`${data.comparedToPrevious?.transactionChange ?? 0}% vs previous`}
+          />
+          <Stat
+            label="Avg transaction"
+            value={moneyZAR(data.averageTransaction)}
+            sub={`Top category: ${data.topCategory || "—"}`}
+          />
+        </div>
+      )}
     </Card>
   );
 }
