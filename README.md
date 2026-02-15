@@ -31,16 +31,16 @@ Production-grade financial analytics dashboard built with React (Vite), Tailwind
 ## Run Locally
 
 ### Install
-npm install
-cd server && npm install
+- npm install
+- cd server && npm install
 
 ### Run
 npm run dev
 
 ## Run with Docker
 
-docker build -t customer-spending-dashboard .
-docker run -p 8080:4000 customer-spending-dashboard
+-docker build -t customer-spending-dashboard .
+-docker run -p 8080:4000 customer-spending-dashboard
 
 ## Production Notes
 - Single Docker container serves:
