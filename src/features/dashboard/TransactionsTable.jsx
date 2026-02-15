@@ -24,8 +24,11 @@ export default function TransactionsTable({ rows, loading }) {
 
             {!loading && rows.length === 0 && (
               <tr>
-                <td className="px-4 py-8 text-center text-slate-500" colSpan={6}>
-                  No transactions yet (wireframe placeholder)
+                <td
+                  className="px-4 py-10 text-center text-slate-500"
+                  colSpan={6}
+                >
+                  No transactions found for the selected filters.
                 </td>
               </tr>
             )}

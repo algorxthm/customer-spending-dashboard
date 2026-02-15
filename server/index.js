@@ -1,7 +1,24 @@
+import path from "path";
+import { fileURLToPath } from "url";
+
 import express from "express";
 
 const app = express();
 app.use(express.json());
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve frontend build in production
+if (process.env.NODE_ENV === "production") {
+  const distPath = path.resolve(__dirname, "../dist");
+  app.use(express.static(distPath));
+
+  // SPA fallback (so refresh on routes works)
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(distPath, "index.html"));
+  });
+}
 
 // ----------------------
 // Mock Data (shape matches brief) :contentReference[oaicite:1]{index=1}
@@ -370,6 +387,7 @@ app.get("/api/customers/:customerId/filters", (req, res) => {
 
 // Health
 app.get("/api/health", (req, res) => res.json({ ok: true }));
+
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Mock API running on http://localhost:${PORT}`));

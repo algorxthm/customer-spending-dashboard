@@ -17,3 +17,10 @@ cd server && npm install
 
 ### Run
 npm run dev
+
+## Run with Docker
+
+```bash
+docker build -t customer-spending-dashboard .
+docker run -p 8080:4000 customer-spending-dashboard
+
