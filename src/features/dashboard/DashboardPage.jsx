@@ -7,6 +7,8 @@ import CategoryChartCard from "./CategoryChartCard";
 import TrendChartCard from "./TrendChartCard";
 import GoalsSection from "./GoalsSection";
 import TransactionsSection from "./TransactionSection";
+import Footer from "../../components/Footer";
+
 
 export default function DashboardPage() {
   const [customerId, setCustomerId] = useState("12345");
@@ -111,6 +113,7 @@ export default function DashboardPage() {
           refreshKey={refreshKey}
         />
       </div>
-    </PageContainer>
+      <Footer/>
+      </PageContainer>
   );
 }
