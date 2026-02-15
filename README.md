@@ -39,8 +39,8 @@ npm run dev
 
 ## Run with Docker
 
--docker build -t customer-spending-dashboard .
--docker run -p 8080:4000 customer-spending-dashboard
+/> docker build -t customer-spending-dashboard .
+/> docker run -p 8080:4000 customer-spending-dashboard
 
 ## Production Notes
 - Single Docker container serves:
